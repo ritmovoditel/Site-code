@@ -612,23 +612,23 @@ var elementorAdminBarConfig = {"elementor_edit_page":{"id":"elementor_edit_page"
 Title: Elementor Custom-Code #1838
 Type: elementor_snippet
 Author: vkptm
-Last edited: 2023-03-16 16:00:24
+Last edited: 2023-03-16 16:06:52
 --- The comment is visible only for administrators ---
 -->
 <script>
-// отримати всі елементи з класом .elementor-post__card1, .elementor-post__card2, .elementor-post__card3
 const cards = document.querySelectorAll('.elementor-post__card1, .elementor-post__card2, .elementor-post__card3');
-
-// визначити висоту вікна браузера
 const windowHeight = window.innerHeight;
 
-// функція, яка перевіряє, чи знаходиться елемент на екрані
 function isElementInViewport(element) {
-  const top = element.offsetTop;
-  return top <= (window.pageYOffset + windowHeight);
+  const rect = element.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
 }
 
-// функція, яка запускає анімацію, якщо елемент знаходиться на екрані
 function animateIfInViewport() {
   cards.forEach(card => {
     if (isElementInViewport(card)) {
@@ -637,14 +637,8 @@ function animateIfInViewport() {
   });
 }
 
-// запустити анімацію, якщо елемент вже знаходиться на екрані при завантаженні сторінки
 animateIfInViewport();
-
-// запустити анімацію, коли користувач скролить сторінку
 window.addEventListener('scroll', animateIfInViewport);
-
-
-
 </script>
 
 <!-- End of snippet -->
